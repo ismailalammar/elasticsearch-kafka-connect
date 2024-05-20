@@ -63,10 +63,15 @@ Before you begin, ensure you have Docker and Docker Compose installed on your sy
         }'
         ```
   
-4. Insert data into the MySQL table and verify that it appears in Elasticsearch.
-    ```sql
-    insert into orders (customer_id, order_total_usd, make, model, delivery_city, delivery_company, delivery_address) values ( 101010, 197745.59, 'TST', 'TST Car', 'Berlin', 'TST Group', 'dummy Street');
-    ```
+4. Connect to MySQL and Insert Data.
+    1. connect to MySQL using this command
+        ```sh
+        docker exec -it mysql bash -c 'mysql -u root -p$MYSQL_ROOT_PASSWORD demo'
+        ```
+    2. Insert data
+        ```sql
+        insert into orders (customer_id, order_total_usd, make, model, delivery_city, delivery_company, delivery_address) values ( 101010, 197745.59, 'TST', 'TST Car', 'Berlin', 'TST Group', 'dummy Street');
+        ```
 5. Check Elasticsearch for the new data.
     ```sh
     curl -X GET "localhost:9200/kc.ts.demo.orders/_search" -H 'Content-Type: application/json' -d'
